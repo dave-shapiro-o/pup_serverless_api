@@ -4,15 +4,7 @@ module.exports = (req, res) => {
   const puppeteer = require("puppeteer");
 
   async function getVideoUrl() {
-    const browser = await puppeteer.launch(
-      {
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: chromium.headless,
-        ignoreHTTPSErrors: true,
-    }
-    );
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(resultsUrl, { timeout: 0, waitUntil: "networkidle0" });
 
