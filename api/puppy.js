@@ -4,6 +4,6 @@ module.exports = (req, res) => {
             {url: "https://www.youtube.com/watch?v=BhArBPtW6Ms"}
         ])
     }else {
-
+        res.send("Das is verboten!!")
     }
 }
