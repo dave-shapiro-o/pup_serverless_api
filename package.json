@@ -11,6 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "@vercel/node": "^2.8.0",
-    "puppeteer": "18.1.0"
+    "puppeteer": "18.1.0",
+    "cors": "^2.8.5"
+
   }
 }
