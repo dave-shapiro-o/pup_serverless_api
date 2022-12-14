@@ -1,0 +1,9 @@
+{
+    "routes":[
+        {
+            "src": "/",
+            "methods": ["GET"],
+            "dest": "/api/puppy.js"
+        }
+    ]
+}
