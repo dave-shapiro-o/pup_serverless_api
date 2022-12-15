@@ -22,7 +22,7 @@ const handler = (req, res) => {
   const puppeteer = require("puppeteer");
 
   async function getVideoUrl() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions']})
     const page = await browser.newPage();
     const query = req.query.url;
 
