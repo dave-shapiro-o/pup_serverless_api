@@ -8,7 +8,7 @@
     ],
     "functions": {
         "api/puppy.js": {
-          "maxDuration": 60
+          "maxDuration": 10
         }
       }
 }
