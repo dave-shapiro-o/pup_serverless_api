@@ -16,5 +16,8 @@
   },
   "engines": {
     "node": "^14"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0"
   }
 }

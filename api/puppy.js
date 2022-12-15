@@ -1,3 +1,4 @@
+import chromium from 'chrome-aws-lambda';
 
 const allowCors = fn => async (req, res) => {
 
@@ -22,7 +23,14 @@ const handler = (req, res) => {
   const puppeteer = require("puppeteer");
 
   async function getVideoUrl() {
-    const browser = await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions']})
+    // const browser = await puppeteer.launch()
+    const browser = await chromium.puppeteer.launch({
+        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true,
+      })
     const page = await browser.newPage();
     const query = req.query.url;
 
