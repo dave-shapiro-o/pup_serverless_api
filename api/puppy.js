@@ -1,24 +1,4 @@
-import chromium from 'chrome-aws-lambda';
-
-const allowCors = fn => async (req, res) => {
-
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    // another common pattern
-    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Origin, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-    )
-    if (req.method === 'OPTIONS') {
-      res.status(200).end()
-      return
-    }
-    return await fn(req, res)
-  }
-
-const handler = (req, res) => {
+module.exports = (req, res) => {
     if(req.method === 'GET'){
   const puppeteer = require("puppeteer-core");
 
@@ -39,9 +19,7 @@ const handler = (req, res) => {
 
     // const content = await (await page.$$eval('a', (El) => El.map((el) => el.getAttribute('href'))));
     const content = await page.$$eval(".LC20lb", els => 
-      els
-      .map(e => ({title: e.innerText, link: e.parentNode.href}))
-      .filter(e => e.link.includes ('www.youtube.com/watch?v='))
+      els.map(e => ({title: e.innerText, link: e.parentNode.href}))
     );
     const link = content[0].link
     // const [url] = await page.evaluate(() => 
@@ -57,4 +35,3 @@ const handler = (req, res) => {
 
     if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
 }
-module.exports = allowCors(handler)
