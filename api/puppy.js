@@ -1,4 +1,22 @@
-module.exports = (req, res) => {
+
+const allowCors = fn => async (req, res) => {
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // another common pattern
+    // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
+    if (req.method === 'OPTIONS') {
+      res.status(200).end()
+      return
+    }
+    return await fn(req, res)
+  }
+
+const handler = (req, res) => {
     if(req.method === 'GET'){
   const puppeteer = require("puppeteer");
 
@@ -13,7 +31,9 @@ module.exports = (req, res) => {
     // const content = await (await page.$$eval('a', (El) => El.map((el) => el.getAttribute('href'))))
     // ;
     const content = await page.$$eval(".LC20lb", els => 
-      els.map(e => ({title: e.innerText, link: e.parentNode.href}))
+      els
+      .map(e => ({title: e.innerText, link: e.parentNode.href}))
+      .filter(e => e.link.includes ('www.youtube.com/watch?v='))
     );
     const link = content[0].link
     // const [url] = await page.evaluate(() => 
@@ -27,3 +47,4 @@ module.exports = (req, res) => {
         res.send("Das is verboten!!")
     }
 }
+module.exports = allowCors(handler)
