@@ -1,16 +1,10 @@
 module.exports = (req, res) => {
     if(req.method === 'GET'){
-  const puppeteer = require("puppeteer-core");
+  const puppeteer = require("puppeteer");
 
   async function getVideoUrl() {
-    // const browser = await puppeteer.launch()
-    const browser = await chromium.puppeteer.launch({
-        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: true,
-        ignoreHTTPSErrors: true,
-      })
+    const browser = await puppeteer.launch()
+    
     const page = await browser.newPage();
     const query = req.query.url;
 
@@ -20,6 +14,7 @@ module.exports = (req, res) => {
     // const content = await (await page.$$eval('a', (El) => El.map((el) => el.getAttribute('href'))));
     const content = await page.$$eval(".LC20lb", els => 
       els.map(e => ({title: e.innerText, link: e.parentNode.href}))
+      .filter(e => e.link.includes ('www.youtube.com/watch?v='))
     );
     const link = content[0].link
     // const [url] = await page.evaluate(() => 
