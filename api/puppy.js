@@ -29,8 +29,7 @@ const handler = (req, res) => {
     await page.goto(`https://www.google.com/search?q=${query}&biw=1410&bih=715&tbm=vid`, 
     { timeout: 0, waitUntil: "networkidle0" });
 
-    // const content = await (await page.$$eval('a', (El) => El.map((el) => el.getAttribute('href'))))
-    // ;
+    // const content = await (await page.$$eval('a', (El) => El.map((el) => el.getAttribute('href'))));
     const content = await page.$$eval(".LC20lb", els => 
       els
       .map(e => ({title: e.innerText, link: e.parentNode.href}))
@@ -47,7 +46,7 @@ const handler = (req, res) => {
     }else {
         res.send("Das is verboten!!")
     }
-    
+
     if(req.method === 'OPTIONS') { return res.status(200).json(({ body: "OK" })) }
 }
 module.exports = allowCors(handler)
