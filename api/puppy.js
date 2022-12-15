@@ -20,7 +20,7 @@ const allowCors = fn => async (req, res) => {
 
 const handler = (req, res) => {
     if(req.method === 'GET'){
-  const puppeteer = require("puppeteer");
+  const puppeteer = require("puppeteer-core");
 
   async function getVideoUrl() {
     // const browser = await puppeteer.launch()
