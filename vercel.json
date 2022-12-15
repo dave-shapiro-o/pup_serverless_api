@@ -5,5 +5,10 @@
             "methods": ["GET"],
             "dest": "/api/puppy.js"
         }
-    ]
+    ],
+    "functions": {
+        "api/puppy.js": {
+          "maxDuration": 30
+        }
+      }
 }
